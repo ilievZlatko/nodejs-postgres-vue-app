@@ -1,0 +1,16 @@
+{
+	"name": "recepiebook",
+	"version": "1.0.0",
+	"description": "recepie manager",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Zlatko Iliev",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "*",
+		"express": "*",
+		"pg": "*"
+	}
+}
