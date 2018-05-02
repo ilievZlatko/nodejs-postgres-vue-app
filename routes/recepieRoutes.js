@@ -23,4 +23,21 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+router.post('/', async (req, res, next) => {
+	const client = await pool.connect();
+
+	try {
+		const response = await client.query(
+			`INSERT INTO recepies (name, ingredients, directions) VALUES('${
+				req.body.name
+			}', '${req.body.ingredients}', '${req.body.directions}')`
+		);
+		res.status(200).json({ result: 'successfully created' });
+		client.release();
+	} catch (err) {
+		res.status(500).json({ result: err });
+		client.release();
+	}
+});
+
 module.exports = router;

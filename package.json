@@ -4,13 +4,14 @@
 	"description": "recepie manager",
 	"main": "app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "nodemon app"
 	},
 	"author": "Zlatko Iliev",
 	"license": "ISC",
 	"dependencies": {
 		"body-parser": "*",
 		"express": "*",
+		"nodemon": "^1.17.3",
 		"pg": "*"
 	}
 }

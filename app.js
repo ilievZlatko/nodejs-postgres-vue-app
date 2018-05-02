@@ -5,10 +5,10 @@ const recepies = require('./routes/recepieRoutes');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // Set public folder
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
