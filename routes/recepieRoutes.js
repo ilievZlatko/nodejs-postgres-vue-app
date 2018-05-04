@@ -1,17 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const pg = require('pg');
-const queries = require('./QUERIES');
+const queries = require('../utils/QUERIES');
+const variables = require('../utils/environmentVars');
 
 const connectionString =
-	process.env.DATABASE_URL ||
-	'postgresql://recepiesadmin:zlatko1060@localhost:5432/recepiebookdb';
+	process.env.DATABASE_URL || variables.POSTGRES_CONNECTION_STRING;
 
 const pool = new pg.Pool({ connectionString });
 
+// middleware function to check for logged-in users
+const sessionChecker = (req, res, next) => {
+	if (req.session.user && req.cookies.user_sid) {
+		res.redirect('/');
+	} else {
+		next();
+	}
+};
+
 // ROUTES
 // GET all recepies Route
-router.get('/', async (req, res, next) => {
+router.get('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
@@ -25,7 +34,7 @@ router.get('/', async (req, res, next) => {
 });
 
 // GET one recipe by ID
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
@@ -41,7 +50,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST Route
-router.post('/', async (req, res, next) => {
+router.post('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
@@ -49,7 +58,8 @@ router.post('/', async (req, res, next) => {
 			queries.INSERT_NEW_RECIPE(
 				req.body.name,
 				req.body.ingredients,
-				req.body.directions
+				req.body.directions,
+				req.body.userId
 			)
 		);
 		res.status(200).json({ result: 'successfully created' });
@@ -61,7 +71,7 @@ router.post('/', async (req, res, next) => {
 });
 
 // UPDATE Route
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
@@ -81,13 +91,11 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // DELETE Route
-router.delete('/:id', async (req, res, next) => {
+router.delete('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(
-			queries.DELETE_RECIPE(req.params.id)
-		);
+		const response = await client.query(queries.DELETE_RECIPE(req.body.id));
 		res.status(200).json({ result: 'successfully deleted' });
 		client.release();
 	} catch (err) {

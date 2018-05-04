@@ -1,9 +1,9 @@
 // QUERIES
 const GET_ALL_RECEPIES = 'SELECT * FROM recepies ORDER BY id ASC';
 const GET_ONE_RECIPE = id => `SELECT * FROM recepies WHERE id = ${id}`;
-const INSERT_NEW_RECIPE = (name, ingredients, directions) => `
-	INSERT INTO recepies (name, ingredients, directions)
-	VALUES('${name}', '${ingredients}', '${directions}')
+const INSERT_NEW_RECIPE = (name, ingredients, directions, userId) => `
+	INSERT INTO recepies (name, ingredients, directions, userId)
+	VALUES('${name}', '${ingredients}', '${directions}', '${userId}')
 `;
 const UPDATE_RECIPE = (id, params) => `
 	UPDATE recepies SET
