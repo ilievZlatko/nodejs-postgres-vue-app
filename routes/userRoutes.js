@@ -3,6 +3,7 @@ const router = express.Router();
 const pg = require('pg');
 const bcrypt = require('bcrypt');
 const queries = require('../utils/userQueries');
+const { DELETE_ALL_USER_RECEPIES } = require('../utils/recepieQueries');
 const variables = require('../utils/environmentVars');
 
 // open db connection
@@ -108,6 +109,7 @@ router.delete('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
+		await client.query(DELETE_ALL_USER_RECEPIES(req.body.userId));
 		const response = await client.query(queries.DELETE_USER(req.body.userId));
 		res.status(200).json({ result: 'successfully deleted' });
 		client.release();
