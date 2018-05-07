@@ -90,16 +90,17 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 	try {
 		const response = await client.query(
 			queries.UPDATE_USER(req.params.id, {
-				firstName: req.body.firstName,
-				lastName: req.body.lastName,
-				email: req.body.email,
+				...req.body,
 				password: hashedPassword,
 				updatedAt: new Date().toISOString(),
 			}),
 		);
-		res.status(200).json({ result: 'successfully updated' });
+		res
+			.status(200)
+			.json({ result: response.rows, message: 'successfully updated' });
 		client.release();
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ result: err });
 		client.release();
 	}
