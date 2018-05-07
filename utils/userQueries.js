@@ -14,11 +14,11 @@ const INSERT_NEW_USER = (
 `;
 const UPDATE_USER = (userId, params) => `
 	UPDATE users SET
-	firsr_name = '${params.firstName}',
+	first_name = '${params.firstName}',
 	last_name = '${params.lastName}',
 	email = '${params.email}',
   password = '${params.password}',
-	updatedAt = '${params.updatedAt}',
+	updated_at = '${params.updatedAt}',
 	WHERE id = ${userId};
 `;
 const DELETE_USER = userId => `DELETE FROM users WHERE id = ${userId}`;
