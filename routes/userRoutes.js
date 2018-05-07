@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const pg = require('pg');
-const queries = require('../utils/QUERIES');
+const bcrypt = require('bcrypt');
+const queries = require('../utils/userQueries');
 const variables = require('../utils/environmentVars');
 
+// open db connection
 const pool = new pg.Pool({
 	user: variables.USER,
 	host: variables.HOST,
@@ -27,7 +29,7 @@ router.get('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(queries.GET_ALL_RECEPIES);
+		const response = await client.query(queries.GET_ALL_USERS);
 		res.status(200).json({ result: response.rows });
 		client.release();
 	} catch (err) {
@@ -41,7 +43,9 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(queries.GET_ONE_RECIPE(req.params.id));
+		const response = await client.query(
+			queries.GET_ONE_USER(req.params.userId),
+		);
 		res.status(200).json({ result: response.rows });
 		client.release();
 	} catch (err) {
@@ -53,17 +57,23 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 // POST Route
 router.post('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
+	const hashedPassword = bcrypt.hashSync(req.body.password, 10);
 
 	try {
 		const response = await client.query(
-			queries.INSERT_NEW_RECIPE(
-				req.body.name,
-				req.body.ingredients,
-				req.body.directions,
-				req.body.userId,
+			queries.INSERT_NEW_USER(
+				req.body.firstName,
+				req.body.lastName,
+				req.body.email,
+				hashedPassword,
+				new Date().toISOString(),
+				new Date().toISOString(),
 			),
 		);
-		res.status(200).json({ result: 'successfully created' });
+
+		res
+			.status(200)
+			.json({ result: response.rows, message: 'successfully created' });
 		client.release();
 	} catch (err) {
 		res.status(500).json({ result: err });
@@ -77,10 +87,12 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 
 	try {
 		const response = await client.query(
-			queries.UPDATE_RECIPE(req.params.id, {
-				name: req.body.name,
-				ingredients: req.body.ingredients,
-				directions: req.body.directions,
+			queries.UPDATE_USER(req.params.userId, {
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				email: req.body.email,
+				password: req.body.password,
+				updatedAt: new Date().toISOString(),
 			}),
 		);
 		res.status(200).json({ result: 'successfully updated' });
@@ -96,7 +108,7 @@ router.delete('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(queries.DELETE_RECIPE(req.body.id));
+		const response = await client.query(queries.DELETE_USER(req.body.userId));
 		res.status(200).json({ result: 'successfully deleted' });
 		client.release();
 	} catch (err) {

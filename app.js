@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const recipeRoutes = require('./routes/recepieRoutes');
-const User = require('./models/User');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -27,9 +27,9 @@ app.use(
 		resave: false,
 		saveUninitialized: false,
 		cookie: {
-			expires: 600000
-		}
-	})
+			expires: 600000,
+		},
+	}),
 );
 
 // Allow CORS header config
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	req.header(
 		'Access-Control-Allow-Headers',
-		'Origin, X-Requested-With, Content-Type, Accept'
+		'Origin, X-Requested-With, Content-Type, Accept',
 	);
 	if (req.method === 'OPTIONS') {
 		res.header('Access-Control-Allow-Methods', 'PUT, POST, DELETE');
@@ -57,6 +57,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/recepies', recipeRoutes);
+app.use('/api/users', userRoutes);
 
 // Start Server
 app.listen(PORT, () => {
