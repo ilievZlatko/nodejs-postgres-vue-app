@@ -85,13 +85,15 @@ router.post('/', sessionChecker, async (req, res, next) => {
 // UPDATE Route
 router.put('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
-	const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+
+	if (req.body.password) {
+		req.body.password = bcrypt.hashSync(req.body.password, 10);
+	}
 
 	try {
 		const response = await client.query(
 			queries.UPDATE_USER(req.params.id, {
 				...req.body,
-				password: hashedPassword,
 				updatedAt: new Date().toISOString(),
 			}),
 		);
@@ -100,7 +102,6 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 			.json({ result: response.rows, message: 'successfully updated' });
 		client.release();
 	} catch (err) {
-		console.log(err);
 		res.status(500).json({ result: err });
 		client.release();
 	}
