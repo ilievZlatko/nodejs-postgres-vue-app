@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pg = require('pg');
-const queries = require('../utils/QUERIES');
+const queries = require('../utils/recepieQueries');
 const variables = require('../utils/environmentVars');
 
 const pool = new pg.Pool({
@@ -81,6 +81,7 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 				name: req.body.name,
 				ingredients: req.body.ingredients,
 				directions: req.body.directions,
+				user_id: req.body.userId,
 			}),
 		);
 		res.status(200).json({ result: 'successfully updated' });
