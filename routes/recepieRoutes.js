@@ -28,10 +28,14 @@ router.get('/', sessionChecker, async (req, res, next) => {
 
 	try {
 		const response = await client.query(queries.GET_ALL_RECEPIES);
-		res.status(200).json({ result: response.rows });
+		res.status(200).json({
+			result: response.rows
+		});
 		client.release();
 	} catch (err) {
-		res.status(500).json({ result: err });
+		res.status(500).json({
+			result: err
+		});
 		client.release();
 	}
 });
@@ -42,10 +46,14 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 
 	try {
 		const response = await client.query(queries.GET_ONE_RECIPE(req.params.id));
-		res.status(200).json({ result: response.rows });
+		res.status(200).json({
+			result: response.rows
+		});
 		client.release();
 	} catch (err) {
-		res.status(500).json({ result: err });
+		res.status(500).json({
+			result: err
+		});
 		client.release();
 	}
 });
@@ -63,10 +71,14 @@ router.post('/', sessionChecker, async (req, res, next) => {
 				req.body.userId,
 			),
 		);
-		res.status(200).json({ result: 'successfully created' });
+		res.status(200).json({
+			result: 'successfully created'
+		});
 		client.release();
 	} catch (err) {
-		res.status(500).json({ result: err });
+		res.status(500).json({
+			result: err
+		});
 		client.release();
 	}
 });
@@ -84,24 +96,32 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 				user_id: req.body.userId,
 			}),
 		);
-		res.status(200).json({ result: 'successfully updated' });
+		res.status(200).json({
+			result: 'successfully updated'
+		});
 		client.release();
 	} catch (err) {
-		res.status(500).json({ result: err });
+		res.status(500).json({
+			result: err
+		});
 		client.release();
 	}
 });
 
 // DELETE Route
-router.delete('/', sessionChecker, async (req, res, next) => {
+router.delete('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(queries.DELETE_RECIPE(req.body.id));
-		res.status(200).json({ result: 'successfully deleted' });
+		const response = await client.query(queries.DELETE_RECIPE(req.params.id));
+		res.status(200).json({
+			result: 'successfully deleted'
+		});
 		client.release();
 	} catch (err) {
-		res.status(500).json({ result: err });
+		res.status(500).json({
+			result: err
+		});
 		client.release();
 	}
 });

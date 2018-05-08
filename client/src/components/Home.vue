@@ -13,13 +13,16 @@
 </template>
 
 <script>
+import Vuex from 'vuex';
+
 export default {
   name: 'Home',
 
   computed: {
-    recepies() {
-      return this.$store.state.recepies;
-    },
+    ...Vuex.mapState({
+      loadingRecepies: state => state.recepies.loadingRecepies,
+      recepies: state => state.recepies.recepies,
+    }),
   },
 
   data() {
@@ -27,6 +30,14 @@ export default {
       msg: 'Welcome to recepie book',
       subheading: 'You can find big viriety of recepies here.',
     };
+  },
+
+  methods: {
+    ...Vuex.mapActions('recepies', ['loadRecepies']),
+  },
+
+  mounted() {
+    this.loadRecepies();
   },
 };
 </script>
