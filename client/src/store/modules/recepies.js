@@ -77,13 +77,7 @@ export default {
     },
 
     updateRecepieById({ rootState, commit }, loadData) {
-      const data = {
-        name: loadData.name,
-        ingredients: loadData.ingredients,
-        directions: loadData.directions,
-        user_id: loadData.user_id,
-        photo_url: loadData.photo_url,
-      };
+      const data = _.assign({}, loadData);
 
       const options = {
         url: rootState.urls.getSingleRecipe(loadData.id),
