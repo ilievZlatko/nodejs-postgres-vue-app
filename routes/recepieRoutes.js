@@ -68,12 +68,13 @@ router.post('/', sessionChecker, async (req, res, next) => {
 				req.body.name,
 				req.body.ingredients,
 				req.body.directions,
-				req.body.userId,
-				req.body.photoUrl,
+				req.body.user_id,
+				req.body.photo_url,
 			),
 		);
 		res.status(200).json({
-			result: 'successfully created'
+			result: response.rows,
+			message: 'successfully created',
 		});
 		client.release();
 	} catch (err) {
@@ -89,17 +90,19 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		const response = await client.query(
+		const update = await client.query(
 			queries.UPDATE_RECIPE(req.params.id, {
 				name: req.body.name,
 				ingredients: req.body.ingredients,
 				directions: req.body.directions,
-				user_id: req.body.userId,
-				photo_url: req.body.photoUrl,
+				user_id: req.body.user_id,
+				photo_url: req.body.photo_url,
 			}),
 		);
+
+		const response = await client.query(queries.GET_ONE_RECIPE(req.params.id));
 		res.status(200).json({
-			result: 'successfully updated'
+			result: response.rows
 		});
 		client.release();
 	} catch (err) {

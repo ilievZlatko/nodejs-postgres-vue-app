@@ -1,34 +1,34 @@
 // QUERIES
 const GET_ALL_USERS = 'SELECT * FROM users ORDER BY id ASC';
 
-const GET_ONE_USER = userId => `SELECT * FROM users WHERE id = ${userId}`;
+const GET_ONE_USER = user_id => `SELECT * FROM users WHERE id = ${user_id}`;
 
 const INSERT_NEW_USER = (
-	firstName,
-	lastName,
+	first_name,
+	last_name,
 	email,
 	password,
 	createdAt,
 	updatedAt,
 ) => `
 	INSERT INTO users (first_name, last_name, email, password, created_at, updated_at)
-	VALUES('${firstName}', '${lastName}', '${email}', '${password}', '${createdAt}', '${updatedAt}')
+	VALUES('${first_name}', '${last_name}', '${email}', '${password}', '${createdAt}', '${updatedAt}')
 `;
 
-const UPDATE_USER = (userId, params) => {
+const UPDATE_USER = (user_id, params) => {
 	console.log(params);
 	return `
 		UPDATE users SET
-		first_name = '${params.firstName}',
-		last_name = '${params.lastName}',
+		first_name = '${params.first_name}',
+		last_name = '${params.last_name}',
 		email = '${params.email}',
-	  password = '${params.password}',
+	  	password = '${params.password}',
 		updated_at = '${params.updatedAt}'
 		WHERE id = ${userId};
 	`;
 };
 
-const DELETE_USER = userId => `DELETE FROM users WHERE id = ${userId}`;
+const DELETE_USER = user_id => `DELETE FROM users WHERE id = ${user_id}`;
 
 module.exports.GET_ALL_USERS = GET_ALL_USERS;
 module.exports.GET_ONE_USER = GET_ONE_USER;

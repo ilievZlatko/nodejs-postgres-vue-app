@@ -37,7 +37,7 @@ export default {
 
       const options = {
         url: rootState.urls.getRecepies,
-        type: 'GET',
+        method: 'GET',
       };
 
       return axios(options)
@@ -61,7 +61,7 @@ export default {
 
       const options = {
         url: rootState.urls.getSingleRecipe(loadData.id),
-        type: 'GET',
+        method: 'GET',
         data,
       };
 
@@ -72,6 +72,30 @@ export default {
         })
         .catch((err) => {
           commit('toggleLoadingOneRecepie', false);
+          throw new Error(err);
+        });
+    },
+
+    updateRecepieById({ rootState, commit }, loadData) {
+      const data = {
+        name: loadData.name,
+        ingredients: loadData.ingredients,
+        directions: loadData.directions,
+        user_id: loadData.user_id,
+        photo_url: loadData.photo_url,
+      };
+
+      const options = {
+        url: rootState.urls.getSingleRecipe(loadData.id),
+        method: 'PUT',
+        data,
+      };
+
+      return axios(options)
+        .then((response) => {
+          commit('updateRecepie', _.head(response.data.result));
+        })
+        .catch((err) => {
           throw new Error(err);
         });
     },

@@ -1,22 +1,23 @@
 // QUERIES
 const GET_ALL_RECEPIES = 'SELECT * FROM recepies ORDER BY id ASC';
 const GET_ONE_RECIPE = id => `SELECT * FROM recepies WHERE id = ${id}`;
-const INSERT_NEW_RECIPE = (name, ingredients, directions, userId, photoUrl) => `
+const INSERT_NEW_RECIPE = (name, ingredients, directions, user_id, photo_url) => `
 	INSERT INTO recepies (name, ingredients, directions, user_id, photo_url)
-	VALUES('${name}', '${ingredients}', '${directions}', '${userId}', '${photoUrl}')
+	VALUES('${name}', '${ingredients}', '${directions}', '${user_id}', '${photo_url}')
 `;
-const UPDATE_RECIPE = (id, params) => `
+const UPDATE_RECIPE = (id, body) => `
 	UPDATE recepies SET
-	name = '${params.name}',
-	ingredients = '${params.ingredients}',
-	directions = '${params.directions}',
-	photo_url = '${params.photoUrl}',
+	name = '${body.name}',
+	ingredients = '${body.ingredients}',
+	directions = '${body.directions}',
+	photo_url = '${body.photo_url}',
+	user_id = '${body.user_id}'
 	WHERE id = ${id};
 `;
 const DELETE_RECIPE = id => `DELETE FROM recepies WHERE id = ${id}`;
 
-const DELETE_ALL_USER_RECEPIES = userId =>
-	`DELETE FROM recepies WHERE user_id = ${userId}`;
+const DELETE_ALL_USER_RECEPIES = user_id =>
+	`DELETE FROM recepies WHERE user_id = ${user_id}`;
 
 module.exports.GET_ALL_RECEPIES = GET_ALL_RECEPIES;
 module.exports.GET_ONE_RECIPE = GET_ONE_RECIPE;

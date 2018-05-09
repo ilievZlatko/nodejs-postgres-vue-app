@@ -112,23 +112,6 @@ a {
   margin-top: 20px;
 }
 
-.btn {
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  text-transform: uppercase;
-  font-weight: 500;
-  border-radius: 5px;
-  background: transparent;
-  color: #868686;
-  outline: none;
-}
-
-.btn:hover {
-  color: #42b983;
-  cursor: pointer;
-}
-
 .btn.btn-danger:hover {
   color: #ec3e7b;
 }

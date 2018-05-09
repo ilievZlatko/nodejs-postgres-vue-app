@@ -45,7 +45,7 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 
 	try {
 		const response = await client.query(
-			queries.GET_ONE_USER(req.params.userId),
+			queries.GET_ONE_USER(req.params.user_id),
 		);
 		res.status(200).json({ result: response.rows });
 		client.release();
@@ -63,8 +63,8 @@ router.post('/', sessionChecker, async (req, res, next) => {
 	try {
 		const response = await client.query(
 			queries.INSERT_NEW_USER(
-				req.body.firstName,
-				req.body.lastName,
+				req.body.first_name,
+				req.body.last_name,
 				req.body.email,
 				hashedPassword,
 				new Date().toISOString(),
@@ -112,8 +112,8 @@ router.delete('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
 
 	try {
-		await client.query(DELETE_ALL_USER_RECEPIES(req.body.userId));
-		const response = await client.query(queries.DELETE_USER(req.body.userId));
+		await client.query(DELETE_ALL_USER_RECEPIES(req.body.user_id));
+		const response = await client.query(queries.DELETE_USER(req.body.user_id));
 		res.status(200).json({ result: 'successfully deleted' });
 		client.release();
 	} catch (err) {

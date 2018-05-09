@@ -28,6 +28,33 @@ img {
   width: 100%;
 }
 
+.btn {
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 5px;
+  background: transparent;
+  color: #868686;
+  outline: none;
+}
+
+.btn:hover {
+  color: #42b983;
+  cursor: pointer;
+}
+
+.btn-danger {
+  color: #fff;
+  background: #ec3e7b;
+}
+
+.btn-primary {
+  color: #fff;
+  background: #2c3e50;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
