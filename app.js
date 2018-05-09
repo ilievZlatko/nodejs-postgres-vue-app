@@ -11,9 +11,6 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-// Set public folder
-app.use(express.static(path.join(__dirname, 'client/dist')));
-
 // Middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -35,8 +32,10 @@ app.use(
 // Allow CORS header config
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	req.header(
 		'Access-Control-Allow-Headers',
+		'Access-Control-Request-Headers',
 		'Origin, X-Requested-With, Content-Type, Accept',
 	);
 	if (req.method === 'OPTIONS') {

@@ -42,7 +42,7 @@ export default {
   },
 
   watch: {
-    id() {
+    ['recepie.id']() {
       this.loadOneRecepie({ id: this.id });
     },
   },
@@ -72,7 +72,7 @@ p {
 }
 
 .image-holder {
-  max-height: 300px;
+  max-height: 400px;
   overflow: hidden;
   display: flex;
   justify-content: center;
