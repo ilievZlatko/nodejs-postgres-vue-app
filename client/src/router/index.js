@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/components/Home';
+import Home from '@/pages/Home';
+import RecepieDetails from '@/pages/RecepieDetails';
 
 Vue.use(Router);
 
@@ -11,6 +12,12 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
+    },
+    {
+      path: '/:id',
+      name: 'recepie-details',
+      component: RecepieDetails,
+      props: route => ({ id: +route.params.id }),
     },
   ],
 });

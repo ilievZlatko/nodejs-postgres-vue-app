@@ -36,8 +36,8 @@ export default {
           commit('toggleLoadingRecepies', false);
         })
         .catch((err) => {
-          console.error(err);
           commit('toggleLoadingRecepies', false);
+          throw new Error(err);
         });
     },
   },

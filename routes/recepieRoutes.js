@@ -69,6 +69,7 @@ router.post('/', sessionChecker, async (req, res, next) => {
 				req.body.ingredients,
 				req.body.directions,
 				req.body.userId,
+				req.body.photoUrl,
 			),
 		);
 		res.status(200).json({
@@ -94,6 +95,7 @@ router.put('/:id', sessionChecker, async (req, res, next) => {
 				ingredients: req.body.ingredients,
 				directions: req.body.directions,
 				user_id: req.body.userId,
+				photo_url: req.body.photoUrl,
 			}),
 		);
 		res.status(200).json({
