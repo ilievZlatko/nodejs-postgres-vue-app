@@ -42,8 +42,8 @@ export default {
   },
 
   watch: {
-    ['recepie.id']() {
-      this.loadOneRecepie({ id: this.id });
+    id(recepieId) {
+      this.loadOneRecepie({ id: recepieId });
     },
   },
 
