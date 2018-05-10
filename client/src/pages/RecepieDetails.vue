@@ -85,8 +85,9 @@ export default {
   },
 
   watch: {
-    id(recepieId) {
-      this.loadOneRecepie({ id: recepieId });
+    id: {
+      handler: 'fetchRecepie',
+      immediate: true,
     },
   },
 
@@ -95,6 +96,10 @@ export default {
       'loadOneRecepie',
       'updateRecepieById'
     ]),
+
+    fetchRecepie() {
+      this.loadOneRecepie({ id: this.id });
+    },
 
     editIngredients(e) {
       this.editedIngredients = e.target.value;
@@ -133,10 +138,6 @@ export default {
 
       this.updateRecepieById(data);
     },
-  },
-
-  mounted() {
-    this.loadOneRecepie({ id: this.id });
   },
 };
 </script>
