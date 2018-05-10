@@ -25,6 +25,7 @@
         </Card>
       </div>
     </Container>
+    <create-button @new-order="handleCreateNewOrder"/>
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import Vuex from 'vuex';
 import Header from '@/components/Header';
 import Container from '@/components/Container';
 import Card from '@/components/Card';
+import CreateButton from '@/components/CreateButton';
 
 export default {
   name: 'Home',
@@ -41,6 +43,7 @@ export default {
     Header,
     Container,
     Card,
+    CreateButton,
   },
 
   computed: {
@@ -67,6 +70,10 @@ export default {
           id: recepie.id,
         },
       });
+    },
+
+    handleCreateNewOrder(e) {
+      console.log(e);
     },
   },
 
