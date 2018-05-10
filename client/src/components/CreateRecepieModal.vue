@@ -20,8 +20,8 @@
     </div>
 
     <div slot="footer">
-      <button class="btn btn-primary" @click="createRecepie">CREATE</button>
-      <button class="btn btn-danger" @click="close">CLOSE</button>
+      <button class="btn btn-approve" @click="createRecepie">CREATE</button>
+      <button class="btn btn-primary" @click="close">CLOSE</button>
     </div>
   </modal>
 </template>

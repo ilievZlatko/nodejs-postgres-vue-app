@@ -31,7 +31,7 @@ img {
 .btn {
   border: none;
   padding: 10px 15px;
-  font-size: 16px;
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: 500;
   border-radius: 5px;
@@ -53,6 +53,16 @@ img {
 .btn-primary {
   color: #fff;
   background: #2c3e50;
+}
+
+.btn-approve {
+  color: #fff;
+  background: #42b983;
+}
+
+.btn-approve:hover {
+  background: #35a974;
+  color: #fff;
 }
 
 #app, input, textarea {
