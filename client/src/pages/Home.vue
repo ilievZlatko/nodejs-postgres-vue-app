@@ -26,6 +26,10 @@
       </div>
     </Container>
     <create-button @new-order="handleCreateNewOrder"/>
+
+    <create-recepie-modal
+      ref="createRecepieModal"
+    />
   </div>
 </template>
 
@@ -35,6 +39,7 @@ import Header from '@/components/Header';
 import Container from '@/components/Container';
 import Card from '@/components/Card';
 import CreateButton from '@/components/CreateButton';
+import CreateRecepieModal from '@/components/CreateRecepieModal';
 
 export default {
   name: 'Home',
@@ -44,6 +49,7 @@ export default {
     Container,
     Card,
     CreateButton,
+    CreateRecepieModal,
   },
 
   computed: {
@@ -73,7 +79,7 @@ export default {
     },
 
     handleCreateNewOrder(e) {
-      console.log(e);
+      this.$refs.createRecepieModal.show();
     },
   },
 

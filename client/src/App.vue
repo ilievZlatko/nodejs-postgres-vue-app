@@ -55,10 +55,24 @@ img {
   background: #2c3e50;
 }
 
-#app {
+#app, input, textarea {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+input, textarea {
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  margin: 8px 0;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid #42b983;
 }
 </style>
