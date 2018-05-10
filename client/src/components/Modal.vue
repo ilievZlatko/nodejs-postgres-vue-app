@@ -1,6 +1,6 @@
 <template>
   <transition name="modal">
-    <div v-show="isOpen" class="modal-container" @click.native="closeIfBackdropClicked">
+    <div v-show="isOpen" class="modal-container" @click="closeIfBackdropClicked">
       <div class="modal-popup">
         <header>
           <slot name="header">{{header}}</slot>
