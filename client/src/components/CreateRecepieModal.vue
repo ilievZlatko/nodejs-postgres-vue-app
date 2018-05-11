@@ -40,7 +40,10 @@
     </div>
 
     <div slot="footer">
-      <button class="btn btn-approve" :disabled="!isValidInput" @click="createRecepie">CREATE</button>
+      <button
+        class="btn btn-approve"
+        :disabled="!isValidInput"
+        @click="createRecepie">CREATE</button>
       <button class="btn btn-primary" @click="close">CLOSE</button>
     </div>
   </modal>

@@ -4,13 +4,14 @@
 	"description": "recepie manager",
 	"main": "app.js",
 	"scripts": {
-		"start": "nodemon app"
+		"start": "concurrently --kill-others \"nodemon app\" \"npm start --prefix ./client\""
 	},
 	"author": "Zlatko Iliev",
 	"license": "ISC",
 	"dependencies": {
 		"bcrypt": "^2.0.1",
 		"body-parser": "^1.18.2",
+		"concurrently": "^3.5.1",
 		"cookie-parser": "^1.4.3",
 		"express": "^4.16.3",
 		"express-session": "^1.15.6",

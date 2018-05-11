@@ -70,7 +70,7 @@ export default {
   methods: {
     ...Vuex.mapActions('recepies', [
       'loadRecepies',
-      'createNewRecepie'
+      'createNewRecepie',
     ]),
 
     previewRecepie(recepie) {
