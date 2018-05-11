@@ -10,8 +10,7 @@
         <h4>Ingredients:</h4>
         <div v-if="canEditIngredients">
           <textarea
-            :value="recepie.ingredients"
-            @input="editIngredients"
+            v-model="ingredients"
           ></textarea>
           <button
             @click="saveIngredients"
@@ -33,8 +32,7 @@
         <h4>Directions:</h4>
         <div v-if="canEditDirections">
           <textarea
-            :value="recepie.directions"
-            @input="editDirections"
+            v-model="directions"
           ></textarea>
           <button
             @click="saveDirections"
@@ -72,8 +70,8 @@ export default {
     return {
       canEditIngredients: false,
       canEditDirections: false,
-      editedIngredients: '',
-      editedDirections: '',
+      ingredients: '',
+      directions: '',
     };
   },
 
@@ -89,6 +87,19 @@ export default {
       handler: 'fetchRecepie',
       immediate: true,
     },
+
+    ['recepie.id']() {
+      this.ingredients = this.recepie.ingredients;
+      this.directions = this.recepie.directions;
+    },
+
+    ['recepie.ingredients'](value) {
+      this.ingredients = value;
+    },
+
+    ['recepie.directions'](value) {
+      this.directions = value;
+    },
   },
 
   methods: {
@@ -101,10 +112,6 @@ export default {
       this.loadOneRecepie({ id: this.id });
     },
 
-    editIngredients(e) {
-      this.editedIngredients = e.target.value;
-    },
-
     onEditIngredients() {
       this.canEditIngredients = true;
     },
@@ -114,14 +121,10 @@ export default {
 
       const data = {
         ...this.recepie,
-        ingredients: this.editedIngredients,
+        ingredients: this.ingredients,
       };
 
       this.updateRecepieById(data);
-    },
-
-    editDirections(e) {
-      this.editedDirections = e.target.value;
     },
 
     onEditDirections() {
@@ -133,7 +136,7 @@ export default {
 
       const data = {
         ...this.recepie,
-        directions: this.editedDirections,
+        directions: this.directions,
       };
 
       this.updateRecepieById(data);
