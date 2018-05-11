@@ -49,7 +49,7 @@ img {
 
 .btn-danger {
   color: #fff;
-  background: #ec3e7b;
+  background: #e67096;
 }
 
 .btn-danger:hover {
@@ -92,11 +92,12 @@ img {
 
 input, textarea {
   font-size: 14px;
-  padding: 10px;
+  padding: 10px 15px;
   border: 1px solid #e2e2e2;
-  border-radius: 5px;
+  border-radius: 20px;
   margin: 8px 0;
   outline: none;
+  resize: none;
 }
 
 input:focus,
