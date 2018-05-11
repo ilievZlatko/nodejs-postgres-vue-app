@@ -106,5 +106,17 @@ export default {
 
       return axios(options);
     },
+
+    deleteRecepieById({rootState}, loadData) {
+      const data = _.assign({}, loadData);
+
+      const options = {
+        url: rootState.urls.getSingleRecipe(data.id),
+        method: 'DELETE',
+        data,
+      };
+
+      return axios(options);
+    },
   },
 };

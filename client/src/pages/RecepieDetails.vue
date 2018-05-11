@@ -45,7 +45,19 @@
         </div>
       </section>
 
+      <section>
+        <button
+          class="btn btn-danger"
+          @click="confirmDelete"
+        >DELETE</button>
+      </section>
     </Container>
+
+    <confirmation-modal
+      ref="confirmationModal"
+      :recepie="recepie"
+      @delete-recepie="deleteRecepie"
+    />
   </div>
 </template>
 
@@ -54,6 +66,7 @@
 import Vuex from 'vuex';
 import Header from '@/components/Header';
 import Container from '@/components/Container';
+import ConfirmationModal from '@/components/ConfirmationModal';
 
 export default {
   name: 'RecepieDetails',
@@ -61,6 +74,7 @@ export default {
   components: {
     Container,
     Header,
+    ConfirmationModal,
   },
 
   props: {
@@ -107,6 +121,7 @@ export default {
     ...Vuex.mapActions('recepies', [
       'loadOneRecepie',
       'updateRecepieById',
+      'deleteRecepieById',
     ]),
 
     fetchRecepie() {
@@ -141,6 +156,22 @@ export default {
       };
 
       this.updateRecepieById(data);
+    },
+
+    confirmDelete() {
+      this.$refs.confirmationModal.show();
+    },
+
+    deleteRecepie() {
+      this.deleteRecepieById(this.recepie)
+        .then(() => {
+          this.$router.push({
+            name: 'home'
+          });
+        })
+        .catch(err => {
+          throw err;
+        });
     },
   },
 };
@@ -196,5 +227,9 @@ p {
 
 .top-margin {
   margin-top: 10px;
+}
+
+section {
+  margin: 20px 0;
 }
 </style>
