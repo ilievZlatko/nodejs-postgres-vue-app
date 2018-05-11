@@ -13,7 +13,7 @@
             :value="recepie.ingredients"
             @input="editIngredients"
           ></textarea>
-          <button 
+          <button
             @click="saveIngredients"
             class="btn btn-danger top-margin"
           >SAVE</button>
@@ -26,7 +26,7 @@
             @click="onEditIngredients"
             class="btn btn-primary top-margin"
           >EDIT</button>
-        </div> 
+        </div>
       </section>
 
       <section class="directions">
@@ -94,7 +94,7 @@ export default {
   methods: {
     ...Vuex.mapActions('recepies', [
       'loadOneRecepie',
-      'updateRecepieById'
+      'updateRecepieById',
     ]),
 
     fetchRecepie() {

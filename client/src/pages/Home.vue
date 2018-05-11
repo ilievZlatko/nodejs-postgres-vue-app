@@ -78,7 +78,7 @@ export default {
       });
     },
 
-    handleCreateNewOrder(e) {
+    handleCreateNewOrder() {
       this.$refs.createRecepieModal.show();
     },
   },

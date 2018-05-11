@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 export default {
   name: 'modal',
 
@@ -51,7 +49,7 @@ export default {
     closeIfBackdropClicked(e) {
       if (e.target !== this.$el) return;
       this.close();
-    }
+    },
   },
 };
 </script>

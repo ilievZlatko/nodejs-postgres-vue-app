@@ -29,6 +29,7 @@ export default {
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   background: #fafafa;
   border-radius: 5px;
   overflow: hidden;

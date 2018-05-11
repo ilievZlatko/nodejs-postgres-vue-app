@@ -1,5 +1,5 @@
 <template>
-  <modal 
+  <modal
     ref="createRecepieModal"
     @close="onClose"
     @show="$emit('show')"
@@ -14,8 +14,20 @@
       <form action="post">
         <input type="text" placeholder="name">
         <input type="text" placeholder="image url here">
-        <textarea name="ingredients" id="ingredients" cols="50" rows="5" placeholder="ingredients"></textarea>
-        <textarea name="directions" id="directions" cols="50" rows="5" placeholder="directions"></textarea>
+        <textarea
+          name="ingredients"
+          id="ingredients"
+          cols="50"
+          rows="5"
+          placeholder="ingredients"
+        ></textarea>
+        <textarea
+          name="directions"
+          id="directions"
+          cols="50"
+          rows="5"
+          placeholder="directions"
+        ></textarea>
       </form>
     </div>
 
