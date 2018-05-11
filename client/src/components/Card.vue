@@ -28,10 +28,12 @@ export default {
 <style scoped>
 .card {
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   justify-content: space-between;
   background: #fafafa;
   border-radius: 5px;
+  margin: 15px;
   overflow: hidden;
   width: 350px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);

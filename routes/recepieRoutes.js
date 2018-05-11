@@ -61,7 +61,7 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 // POST Route
 router.post('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
-
+	console.log(req.body);
 	try {
 		const response = await client.query(
 			queries.INSERT_NEW_RECIPE(

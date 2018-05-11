@@ -34,14 +34,16 @@ img {
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 500;
-  border-radius: 5px;
+  border-radius: 50px;
   background: transparent;
   color: #868686;
   outline: none;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {
   color: #42b983;
+  background: #eaeaea;
   cursor: pointer;
 }
 
@@ -50,7 +52,17 @@ img {
   background: #ec3e7b;
 }
 
+.btn-danger:hover {
+  color: #fff;
+  background: #d04173;
+}
+
 .btn-primary {
+  color: #fff;
+  background: #5a738c;
+}
+
+.btn-primary:hover {
   color: #fff;
   background: #2c3e50;
 }
@@ -63,6 +75,12 @@ img {
 .btn-approve:hover {
   background: #35a974;
   color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
 }
 
 #app, input, textarea {

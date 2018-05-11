@@ -12,14 +12,21 @@
 
     <div>
       <form action="post">
-        <input type="text" placeholder="name">
-        <input type="text" placeholder="image url here">
+        <input
+          type="text"
+          placeholder="name"
+          v-model="recepieName">
+        <input
+          type="text"
+          placeholder="image url here"
+          v-model="recepieImage">
         <textarea
           name="ingredients"
           id="ingredients"
           cols="50"
           rows="5"
           placeholder="ingredients"
+          v-model="recepieIngredients"
         ></textarea>
         <textarea
           name="directions"
@@ -27,12 +34,13 @@
           cols="50"
           rows="5"
           placeholder="directions"
+          v-model="recepieDirections"
         ></textarea>
       </form>
     </div>
 
     <div slot="footer">
-      <button class="btn btn-approve" @click="createRecepie">CREATE</button>
+      <button class="btn btn-approve" :disabled="!isValidInput" @click="createRecepie">CREATE</button>
       <button class="btn btn-primary" @click="close">CLOSE</button>
     </div>
   </modal>
@@ -46,6 +54,23 @@ export default {
 
   components: {
     modal,
+  },
+
+  data() {
+    return {
+      recepieName: '',
+      recepieImage: '',
+      recepieIngredients: '',
+      recepieDirections: '',
+    };
+  },
+
+  computed: {
+    isValidInput() {
+      return this.recepieName.trim()
+        && this.recepieIngredients.trim()
+        && this.recepieDirections.trim();
+    },
   },
 
   methods: {
@@ -62,7 +87,16 @@ export default {
     },
 
     createRecepie() {
-      console.log('create recepie');
+      const recepie = {
+        name: this.recepieName,
+        photo_url: this.recepieImage,
+        ingredients: this.recepieIngredients,
+        directions: this.recepieDirections,
+        user_id: 10,
+      };
+
+      this.$emit('create-recepie', recepie);
+      this.close();
     },
   },
 };

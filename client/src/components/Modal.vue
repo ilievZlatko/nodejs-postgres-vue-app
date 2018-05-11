@@ -104,6 +104,11 @@ export default {
     background: #3da777;
     cursor: pointer;
     user-select: none;
+    transition: all .3s ease;
+  }
+
+  .close-icon:hover {
+    background: #3c986e;
   }
 
   section {

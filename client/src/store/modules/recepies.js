@@ -93,5 +93,17 @@ export default {
           throw new Error(err);
         });
     },
+
+    createNewRecepie({ rootState }, loadData) {
+      const data = _.assign({}, loadData);
+
+      const options = {
+        url: rootState.urls.getRecepies,
+        method: 'POST',
+        data,
+      };
+
+      return axios(options);
+    },
   },
 };

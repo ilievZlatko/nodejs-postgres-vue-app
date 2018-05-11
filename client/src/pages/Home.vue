@@ -25,10 +25,11 @@
         </Card>
       </div>
     </Container>
-    <create-button @new-order="handleCreateNewOrder"/>
+    <create-button @new-order="openCreateNewRecepieModal"/>
 
     <create-recepie-modal
       ref="createRecepieModal"
+      @create-recepie="handleCreateRecepie"
     />
   </div>
 </template>
@@ -67,7 +68,10 @@ export default {
   },
 
   methods: {
-    ...Vuex.mapActions('recepies', ['loadRecepies']),
+    ...Vuex.mapActions('recepies', [
+      'loadRecepies',
+      'createNewRecepie'
+    ]),
 
     previewRecepie(recepie) {
       this.$router.push({
@@ -78,8 +82,16 @@ export default {
       });
     },
 
-    handleCreateNewOrder() {
+    openCreateNewRecepieModal() {
       this.$refs.createRecepieModal.show();
+    },
+
+    handleCreateRecepie(data) {
+      this.createNewRecepie(data)
+        .then(() => this.loadRecepies())
+        .catch((err) => {
+          throw new Error(err);
+        });
     },
   },
 
@@ -89,7 +101,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
 h2,
@@ -117,6 +128,7 @@ a {
 
 .cards-holder {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
 }
