@@ -50,6 +50,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Vuex from 'vuex';
 import Header from '@/components/Header';
 import Container from '@/components/Container';
