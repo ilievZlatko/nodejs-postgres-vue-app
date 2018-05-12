@@ -20,7 +20,7 @@ npm manifest:
   	"description": "recepie manager",
   	"main": "app.js",
   	"scripts": {
-  		"start": "concurrently --kill-others \"nodemon app\" \"npm start --prefix /client\""
+  		"start": "concurrently --kill-others \"nodemon app\" \"npm start --prefix ./client\""
   	},
   	"author": "Zlatko Iliev",
   	"license": "ISC",
@@ -2070,7 +2070,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c concurrently --kill-others "nodemon app" "npm start --prefix /client"
+  Arguments: -c concurrently --kill-others "nodemon app" "npm start --prefix ./client"
   Directory: /Users/zlatkoiliev/Desktop/projects/Node/recepiebook
   Output:
   
