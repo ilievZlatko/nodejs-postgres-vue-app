@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
+const cors = require('cors');
 const recipeRoutes = require('./routes/recepieRoutes');
 const userRoutes = require('./routes/userRoutes');
 
@@ -30,20 +31,7 @@ app.use(
 );
 
 // Allow CORS header config
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-	req.header(
-		'Access-Control-Allow-Headers',
-		'Access-Control-Request-Headers',
-		'Origin, X-Requested-With, Content-Type, Accept',
-	);
-	if (req.method === 'OPTIONS') {
-		res.header('Access-Control-Allow-Methods', 'PUT, POST, DELETE');
-		return res.status(200).json({});
-	}
-	next();
-});
+app.use(cors());
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
