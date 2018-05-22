@@ -7,7 +7,7 @@ import Login from '@/pages/Login';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -24,12 +24,31 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/:id',
       name: 'recepie-details',
       component: RecepieDetails,
       props: route => ({ id: +route.params.id }),
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (!token && requiresAuth) {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default router;

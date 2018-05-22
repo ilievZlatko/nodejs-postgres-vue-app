@@ -57,6 +57,7 @@ export default {
     ...Vuex.mapState({
       loadingRecepies: state => state.recepies.loadingRecepies,
       recepies: state => state.recepies.recepies,
+      token: state => state.users.token,
     }),
   },
 

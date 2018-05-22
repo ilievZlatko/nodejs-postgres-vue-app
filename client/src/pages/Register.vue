@@ -2,9 +2,10 @@
   <div class="register">
     <h1>Register</h1>
     <form
+      autocomplete="off"
       method="post"
       action="/register"
-      @submit.prevent="register"
+      @submit.prevent="registerUser"
     >
       <input
         ref="email"
@@ -43,13 +44,13 @@
         class="btn btn-primary"
       >Register</button>
     </form>
-    <div v-if="error" class="error" v-html="error" @click="dismissError"/>
+    <div v-if="authError || error" class="error" v-html="authError || error" @click="dismissError"/>
     <div v-if="success" class="success" v-html="'User successfully created! You can now login.'" />
   </div>
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService';
+import Vuex from 'vuex';
 
 export default {
   name: 'register',
@@ -59,9 +60,17 @@ export default {
       email: '',
       password: '',
       repeatPassword: '',
-      error: null,
       success: false,
+      error: null,
     };
+  },
+
+  computed: {
+    ...Vuex.mapState({
+      user: state => state.users.user,
+      token: state => state.users.token,
+      authError: state => state.users.authError,
+    }),
   },
 
   watch: {
@@ -74,20 +83,25 @@ export default {
         this.error = 'Passwords do not match.';
       }
     },
+
+    token() {
+      this.showSuccess();
+    },
   },
 
   methods: {
-    async register() {
-      try {
-        await AuthenticationService.register({
-          email: this.email,
-          password: this.password,
-        });
-        this.showSuccess();
-      } catch (error) {
-        this.error = error.response.data.error;
-        this.dismissError();
-      }
+    ...Vuex.mapActions('users', [
+      'register',
+    ]),
+
+    registerUser() {
+      const data = {
+        email: this.email,
+        password: this.password,
+      };
+
+      this.register(data);
+      this.dismissError();
     },
 
     dismissError() {

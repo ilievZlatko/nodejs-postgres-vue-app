@@ -2,9 +2,10 @@
   <div class="login">
     <h1>Login</h1>
     <form
+      autocomplete="off"
       method="post"
       action="/login"
-      @submit.prevent="login"
+      @submit.prevent="loginUser"
     >
       <input
         ref="email"
@@ -29,17 +30,17 @@
       </div>
       <br />
       <button
-        :disabled="password.length < 8 || error"
+        :disabled="password.length < 8 || showError"
         type="submit"
         class="btn btn-primary"
       >LOGIN</button>
     </form>
-    <div v-if="error" class="error" v-html="error" @click="dismissError"/>
+    <div v-if="showError" class="error" v-html="authError" @click="dismissError"/>
   </div>
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService';
+import Vuex from 'vuex';
 
 export default {
   name: 'login',
@@ -48,26 +49,50 @@ export default {
     return {
       email: '',
       password: '',
-      error: null,
+      showError: false,
     };
   },
 
-  methods: {
-    async login() {
-      try {
-        await AuthenticationService.login({
-          email: this.email,
-          password: this.password,
-        });
-      } catch (error) {
-        this.error = error.response.data.error;
+  watch: {
+    authError() {
+      if (this.authError) {
+        this.showError = true;
         this.dismissError();
+      } else {
+        this.showError = false;
       }
+    },
+  },
+
+  computed: {
+    ...Vuex.mapState({
+      user: state => state.users.user,
+      token: state => state.users.token,
+      authError: state => state.users.authError,
+    }),
+  },
+
+  methods: {
+    ...Vuex.mapActions('users', [
+      'login',
+    ]),
+
+    loginUser() {
+      const data = {
+        email: this.email,
+        password: this.password,
+      };
+
+      this.login(data).then(() => {
+        this.dismissError();
+        localStorage.setItem('token', this.token);
+        this.$router.push('/');
+      });
     },
 
     dismissError() {
       setTimeout(() => {
-        this.error = null;
+        this.showError = false;
       }, 5000);
     },
 
