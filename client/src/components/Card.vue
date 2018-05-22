@@ -1,11 +1,7 @@
 <template>
   <div class="card">
     <header v-if="showHeader">
-      <img
-        :src="imageUrl"
-        alt="header image"
-        @error="handleImageError"
-      >
+      <img :src="headerImage" alt="header image">
       <slot name="header" />
     </header>
     <body>
@@ -18,8 +14,6 @@
 </template>
 
 <script>
-import missingImage from '../assets/images/cooking.jpg';
-
 export default {
   name: 'Card',
 
@@ -27,18 +21,6 @@ export default {
     headerImage: { type: String, default: '' },
     showHeader: { type: Boolean, default: true },
     showFooter: { type: Boolean, default: true },
-  },
-
-  data() {
-    return {
-      imageUrl: this.headerImage,
-    };
-  },
-
-  methods: {
-    handleImageError() {
-      this.imageUrl = missingImage;
-    },
   },
 };
 </script>

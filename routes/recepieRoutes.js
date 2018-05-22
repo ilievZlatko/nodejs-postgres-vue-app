@@ -59,16 +59,22 @@ router.get('/:id', sessionChecker, async (req, res, next) => {
 });
 
 // POST Route
-router.post('/', async (req, res, next) => {
+router.post('/', sessionChecker, async (req, res, next) => {
 	const client = await pool.connect();
-
+	console.log(req.body);
 	try {
 		const response = await client.query(
-			queries.INSERT_NEW_RECIPE(req.body)
+			queries.INSERT_NEW_RECIPE(
+				req.body.name,
+				req.body.ingredients,
+				req.body.directions,
+				req.body.user_id,
+				req.body.photo_url,
+			),
 		);
 		res.status(200).json({
-			message: 'successfully created',
 			result: response.rows,
+			message: 'successfully created',
 		});
 		client.release();
 	} catch (err) {
