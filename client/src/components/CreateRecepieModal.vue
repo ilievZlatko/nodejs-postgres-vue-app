@@ -94,6 +94,13 @@ export default {
       this.$refs.createRecepieModal.close();
     },
 
+    resetFields() {
+      this.recepieName = '';
+      this.recepieImage = '';
+      this.recepieIngredients = '';
+      this.recepieDirections = '';
+    },
+
     createRecepie() {
       const recepie = {
         name: this.recepieName,
@@ -104,6 +111,7 @@ export default {
       };
 
       this.$emit('create-recepie', recepie);
+      this.resetFields();
       this.close();
     },
   },
