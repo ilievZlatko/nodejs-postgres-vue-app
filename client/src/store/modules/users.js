@@ -8,7 +8,6 @@ export default {
   state: {
     token: null,
     user: null,
-    isUserLoggedIn: false,
     authError: null,
   },
 
@@ -54,6 +53,12 @@ export default {
         commit('handleError', err.response.data.error);
 
       }
-    }
+    },
+
+    logout({ commit }) {
+      commit('setUser', null);
+      commit('setToken', null);
+      localStorage.removeItem('token');
+    },
   },
 };

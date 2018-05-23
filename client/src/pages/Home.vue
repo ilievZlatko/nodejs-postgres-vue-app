@@ -9,6 +9,11 @@
       <h3>{{ subheading }}</h3>
     </Header>
 
+    <button
+      class="btn btn-approve logout"
+      @click="handleLogout"
+    >logout</button>
+
     <Container>
       <div class="cards-holder">
         <Card
@@ -74,6 +79,10 @@ export default {
       'createNewRecepie',
     ]),
 
+    ...Vuex.mapActions('users', [
+      'logout',
+    ]),
+
     previewRecepie(recepie) {
       this.$router.push({
         name: 'recepie-details',
@@ -93,6 +102,13 @@ export default {
         .catch((err) => {
           throw new Error(err);
         });
+    },
+
+    handleLogout() {
+      this.logout();
+      this.$router.push({
+        name: 'login',
+      });
     },
   },
 
@@ -140,5 +156,11 @@ a {
 
 .btn.btn-danger:hover {
   color: #ec3e7b;
+}
+
+.logout {
+  position: absolute;
+  top: 50px;
+  right: 50px;
 }
 </style>

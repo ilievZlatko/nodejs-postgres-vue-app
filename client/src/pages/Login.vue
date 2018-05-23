@@ -86,7 +86,7 @@ export default {
       this.login(data).then(() => {
         this.dismissError();
         localStorage.setItem('token', this.token);
-        this.$router.push('/');
+        this.$router.push({ name: 'home' });
       });
     },
 
@@ -102,7 +102,7 @@ export default {
     },
 
     navigateToSignIn() {
-      this.$router.push('register');
+      this.$router.push({ name: 'register' });
     },
   },
 };
