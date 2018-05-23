@@ -85,7 +85,6 @@ export default {
 
       this.login(data).then(() => {
         this.dismissError();
-        localStorage.setItem('token', this.token);
         this.$router.push({ name: 'home' });
       });
     },

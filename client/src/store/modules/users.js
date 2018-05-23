@@ -14,10 +14,12 @@ export default {
   mutations: {
     setToken(state, token) {
       state.token = token;
+      localStorage.setItem('token', token);
     },
 
     setUser(state, user) {
       state.user = user;
+      localStorage.setItem('userId', user.id);
     },
 
     handleError(state, authError) {
@@ -59,6 +61,7 @@ export default {
       commit('setUser', null);
       commit('setToken', null);
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
     },
   },
 };

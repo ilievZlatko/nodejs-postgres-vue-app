@@ -3,7 +3,7 @@ const { Recepie } = require('../models')
 module.exports = {
   async loadSingleRecepie (req, res, next) {
     try {
-      const recepies = Recepie.find({
+      const recepies = await Recepie.find({
         where: {
           id: req.params.id
         }
@@ -23,11 +23,12 @@ module.exports = {
 
   async loadRecepies (req, res, next) {
     try {
-      const recepies = Recepie.findAll()
-      const recepiesJson = recepies.toJSON()
+      const recepies = await Recepie.findAll({
+        attributes: ['id', 'userId', 'name', 'photoUrl', 'ingredients', 'directions']
+      })
 
       res.send({
-        result: recepiesJson
+        result: recepies
       })
     } catch (err) {
       res.status(403).send({
@@ -39,7 +40,7 @@ module.exports = {
 
   async createRecepie (req, res, next) {
     try {
-      const recepie = Recepie.create(req.body)
+      const recepie = await Recepie.create(req.body)
       const recepieJson = recepie.toJSON()
 
       res.send({
@@ -56,14 +57,20 @@ module.exports = {
 
   async updateRecepie (req, res, next) {
     try {
-      const recepie = Recepie.update(
-        req.body,
-        { where: { id: req.params.id } }
+      const recepieUpdated = await Recepie.update(
+        {
+          name: req.body.name,
+          photoUrl: req.body.photoUrl,
+          ingredients: req.body.ingredients,
+          directions: req.body.directions
+        },
+        { returning: true, where: { id: req.params.id } }
       )
-      const recepieJson = recepie.toJSON()
+
+      const recepie = recepieUpdated[1][0].toJSON()
 
       res.send({
-        recepie: recepieJson,
+        result: recepie,
         message: 'recepie was successfully updated.'
       })
     } catch (err) {
@@ -76,7 +83,7 @@ module.exports = {
 
   async deleteRecepie (req, res, next) {
     try {
-      Recepie.destroy({
+      await Recepie.destroy({
         where: { id: req.params.id }
       })
 

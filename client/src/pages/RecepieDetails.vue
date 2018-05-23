@@ -1,7 +1,7 @@
 <template>
   <div class="recepie-details">
     <header class="image-holder">
-      <img :src="recepie.photo_url" alt="photo recepie">
+      <img :src="recepie.photoUrl" alt="photo recepie">
     </header>
     <Container>
       <h1 class="recepie-name">{{recepie.name}}</h1>
@@ -22,6 +22,7 @@
             {{recepie.ingredients}}
           </p>
           <button
+            v-if="canEdit"
             @click="onEditIngredients"
             class="btn btn-primary top-margin"
           >EDIT</button>
@@ -41,11 +42,15 @@
         </div>
         <div v-else>
           <p>{{recepie.directions}}</p>
-          <button @click="onEditDirections" class="btn btn-primary top-margin">EDIT</button>
+          <button
+            v-if="canEdit"
+            @click="onEditDirections"
+            class="btn btn-primary top-margin"
+          >EDIT</button>
         </div>
       </section>
 
-      <section>
+      <section v-if="canEdit">
         <button
           class="btn btn-danger"
           @click="confirmDelete"
@@ -85,8 +90,8 @@ export default {
     return {
       canEditIngredients: false,
       canEditDirections: false,
-      ingredients: '',
-      directions: '',
+      ingredients: null,
+      directions: null,
     };
   },
 
@@ -94,18 +99,18 @@ export default {
     ...Vuex.mapState({
       loadingRecepie: state => state.recepies.loadingRecepie,
       recepie: state => state.recepies.recepie,
+      user: state => state.users.user
     }),
+
+    canEdit() {
+      return localStorage.getItem('userId') == this.recepie.userId;
+    }
   },
 
   watch: {
     id: {
       handler: 'fetchRecepie',
       immediate: true,
-    },
-
-    ['recepie.id']() {
-      this.ingredients = this.recepie.ingredients;
-      this.directions = this.recepie.directions;
     },
 
     ['recepie.ingredients'](value) {

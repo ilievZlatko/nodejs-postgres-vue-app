@@ -19,7 +19,7 @@
         <Card
         v-for="recepie in recepies"
         :key="recepie.id"
-        :header-image="recepie.photo_url">
+        :header-image="recepie.photoUrl">
           <template slot="body">
             <a class="card-title" @click="previewRecepie(recepie)"><h4>{{recepie.name}}</h4></a>
             <p class="card-description">{{recepie.ingredients}}</p>

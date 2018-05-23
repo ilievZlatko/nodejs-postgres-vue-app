@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import Vuex from 'vuex';
 import modal from './Modal';
 
 export default {
@@ -69,6 +70,10 @@ export default {
   },
 
   computed: {
+    ...Vuex.mapState({
+      user: state => state.users.user,
+    }),
+
     isValidInput() {
       return this.recepieName.trim()
         && this.recepieIngredients.trim()
@@ -92,10 +97,10 @@ export default {
     createRecepie() {
       const recepie = {
         name: this.recepieName,
-        photo_url: this.recepieImage,
+        photoUrl: this.recepieImage,
         ingredients: this.recepieIngredients,
         directions: this.recepieDirections,
-        user_id: 10,
+        userId: localStorage.getItem('userId'),
       };
 
       this.$emit('create-recepie', recepie);

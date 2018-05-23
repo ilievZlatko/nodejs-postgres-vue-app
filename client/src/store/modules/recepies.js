@@ -68,7 +68,7 @@ export default {
 
       return axios(options)
         .then((response) => {
-          commit('updateRecepie', _.head(response.data.result));
+          commit('updateRecepie', response.data.result);
           commit('toggleLoadingOneRecepie', false);
         })
         .catch((err) => {
@@ -81,14 +81,14 @@ export default {
       const data = _.assign({}, loadData);
 
       const options = {
-        url: rootState.urls.getSingleRecipe(loadData.id),
+        url: rootState.urls.getSingleRecipe(data.id),
         method: 'PUT',
         data,
       };
 
       return axios(options)
         .then((response) => {
-          commit('updateRecepie', _.head(response.data.result));
+          commit('updateRecepie', response.data.result);
         })
         .catch((err) => {
           throw new Error(err);
