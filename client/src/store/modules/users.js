@@ -14,12 +14,16 @@ export default {
   mutations: {
     setToken(state, token) {
       state.token = token;
-      localStorage.setItem('token', token);
+      if (token) {
+        localStorage.setItem('token', token);
+      } 
     },
 
     setUser(state, user) {
       state.user = user;
-      localStorage.setItem('userId', user.id);
+      if (user && user.id) {
+        localStorage.setItem('userId', user.id);
+      }   
     },
 
     handleError(state, authError) {
